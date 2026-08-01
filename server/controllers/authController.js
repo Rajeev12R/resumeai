@@ -34,7 +34,7 @@ export const registerUser = async (req, res) => {
         maxAge: 30 * 24 * 60 * 60 * 1000
       });
 
-      res.status(201).json(userData);
+      res.status(201).json({ ...userData, token });
     } else {
       res.status(400).json({ message: 'Invalid user data' });
     }
@@ -67,7 +67,7 @@ export const loginUser = async (req, res) => {
         maxAge: 30 * 24 * 60 * 60 * 1000
       });
 
-      res.json(userData);
+      res.json({ ...userData, token });
     } else {
       res.status(401).json({ message: 'Invalid email or password' });
     }

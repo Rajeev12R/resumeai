@@ -2,14 +2,22 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { BrainCircuit, LogOut, LayoutDashboard } from 'lucide-react';
 import api from '../api';
-import { getCookie } from '../utils/cookie';
 
 const Header = () => {
   const navigate = useNavigate();
-  const user = getCookie('user');
+  
+  let user = null;
+  try {
+    const userData = localStorage.getItem('user');
+    if (userData) user = JSON.parse(userData);
+  } catch (e) {
+    user = null;
+  }
 
   const handleLogout = async () => {
     try {
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
       await api.post('/auth/logout');
       navigate('/auth');
     } catch (error) {

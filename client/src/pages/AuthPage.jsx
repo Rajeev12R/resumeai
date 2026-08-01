@@ -27,7 +27,12 @@ const AuthPage = () => {
     try {
       const endpoint = isLogin ? '/auth/login' : '/auth/register';
       const payload = isLogin ? { email: formData.email, password: formData.password } : formData;
-      await api.post(endpoint, payload);
+      const { data } = await api.post(endpoint, payload);
+      
+      localStorage.setItem('user', JSON.stringify(data));
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+      }
       
       navigate('/dashboard');
     } catch (err) {
