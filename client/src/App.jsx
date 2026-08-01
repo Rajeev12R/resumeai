@@ -6,10 +6,8 @@ import AuthPage from './pages/AuthPage';
 import Dashboard from './pages/Dashboard';
 import AnalysisPage from './pages/AnalysisPage';
 
-import { getCookie } from './utils/cookie';
-
 const ProtectedRoute = ({ children }) => {
-  const user = getCookie('user');
+  const user = localStorage.getItem('user');
   if (!user) {
     return <Navigate to="/auth" replace />;
   }

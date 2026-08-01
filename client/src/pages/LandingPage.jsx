@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BrainCircuit, Target, FileSearch, Sparkles, UploadCloud, ArrowRight, CheckCircle2, Shield, Zap } from 'lucide-react';
-import { getCookie } from '../utils/cookie';
-
 const LandingPage = () => {
-  const user = getCookie('user');
+  let user = null;
+  try {
+    user = localStorage.getItem('user');
+  } catch (e) {
+    user = null;
+  }
   const getStartedLink = user ? "/dashboard" : "/auth";
   const [isVisible, setIsVisible] = useState(false);
 
