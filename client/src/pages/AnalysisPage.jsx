@@ -4,6 +4,7 @@ import { ArrowLeft, Lightbulb, HelpCircle, CheckCircle2, Code2, FolderOpen, Targ
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
+import { BASE_URL } from '../api';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
@@ -170,7 +171,7 @@ const AnalysisPage = () => {
             onMouseOver={handleMouseOver}
           >
             <Document
-              file={`http://localhost:3000/${originalFile}`}
+              file={`${BASE_URL}/${originalFile}`}
               onLoadSuccess={onDocumentLoadSuccess}
               loading={<div className="p-8 text-muted-foreground flex items-center gap-2"><Loader2 className="h-4 w-4 animate-spin"/> Rendering PDF...</div>}
               error={<div className="p-8 text-destructive">Failed to load PDF. Check backend port 3000.</div>}
