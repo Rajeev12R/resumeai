@@ -14,6 +14,7 @@ connectDB();
 import cookieParser from 'cookie-parser';
 
 const app = express();
+app.set('trust proxy', 1);
 
 app.use(cors({
   origin: ['http://localhost:5173', 'https://resumeai-omega-steel.vercel.app'],

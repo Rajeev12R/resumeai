@@ -19,17 +19,18 @@ export const registerUser = async (req, res) => {
       const token = generateToken(user._id);
       const userData = { _id: user._id, name: user.name, email: user.email };
       
+      const isProd = process.env.NODE_ENV === 'production' || process.env.RENDER === 'true';
       res.cookie('token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+        secure: isProd,
+        sameSite: isProd ? 'none' : 'strict',
         maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
       });
       
       res.cookie('user', JSON.stringify(userData), {
         httpOnly: false, // Let client read this to show "Hello Name"
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+        secure: isProd,
+        sameSite: isProd ? 'none' : 'strict',
         maxAge: 30 * 24 * 60 * 60 * 1000
       });
 
@@ -51,17 +52,18 @@ export const loginUser = async (req, res) => {
       const token = generateToken(user._id);
       const userData = { _id: user._id, name: user.name, email: user.email };
 
+      const isProd = process.env.NODE_ENV === 'production' || process.env.RENDER === 'true';
       res.cookie('token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+        secure: isProd,
+        sameSite: isProd ? 'none' : 'strict',
         maxAge: 30 * 24 * 60 * 60 * 1000
       });
       
       res.cookie('user', JSON.stringify(userData), {
         httpOnly: false,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+        secure: isProd,
+        sameSite: isProd ? 'none' : 'strict',
         maxAge: 30 * 24 * 60 * 60 * 1000
       });
 
@@ -75,7 +77,8 @@ export const loginUser = async (req, res) => {
 };
 
 export const logoutUser = (req, res) => {
-  res.cookie('token', '', { httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict', expires: new Date(0) });
-  res.cookie('user', '', { httpOnly: false, secure: process.env.NODE_ENV === 'production', sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict', expires: new Date(0) });
+  const isProd = process.env.NODE_ENV === 'production' || process.env.RENDER === 'true';
+  res.cookie('token', '', { httpOnly: true, secure: isProd, sameSite: isProd ? 'none' : 'strict', expires: new Date(0) });
+  res.cookie('user', '', { httpOnly: false, secure: isProd, sameSite: isProd ? 'none' : 'strict', expires: new Date(0) });
   res.status(200).json({ message: 'Logged out successfully' });
 };
